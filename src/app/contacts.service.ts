@@ -15,18 +15,18 @@ export class ContactsService {
     return this.http.get(`${API_ENDPOINT}/api/contacts`)
       .map(r => r.json())
       .map(d => <Contact[]>d.items)
-      .delay(3000);
+      .delay(1000);
   }
 
   getContact(id: string) {
     return this.http.get(`${API_ENDPOINT}/api/contacts/${id}`)
       .map(r => r.json())
       .map(d => <Contact>d.item)
-      .delay(3000);
+      .delay(1000);
   }
   
   updateContact(contact: Contact) {
     return this.http.put(`${API_ENDPOINT}/api/contacts/${contact.id}`, contact)
-      .delay(3000);
+      .delay(1000);
   }
 }

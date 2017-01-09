@@ -1,6 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ContactsService } from '../contacts.service'
+import { LoaderService } from '../loader.service';
 import { Contact } from '../models/contact'
 
 @Component({
@@ -9,16 +10,16 @@ import { Contact } from '../models/contact'
   styleUrls: ['./contact-editor.component.css']
 })
 export class ContactEditorComponent implements OnInit {
-  contact: Contact = <any>{ address: {} };
+  contact: Contact;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private contactsService: ContactsService) { }
+    private contactsService: ContactsService,
+    private loader: LoaderService) { }
 
   ngOnInit() {
-    this.contactsService.getContact(this.route.snapshot.params['id'])
-      .subscribe(contact => this.contact = contact);
+    this.contact = this.route.snapshot.data['contact'];
   }
 
   cancel(contact: Contact) {
@@ -26,7 +27,8 @@ export class ContactEditorComponent implements OnInit {
   }
 
   save(contact: Contact) {
-    this.contactsService.updateContact(contact)
-      .subscribe(x => this.router.navigateByUrl(`/contact/${contact.id}`));
+    var saveObs = this.contactsService.updateContact(contact);
+    this.loader.showLoader(saveObs);
+    saveObs.subscribe(x => this.router.navigateByUrl(`/contact/${contact.id}`));
   }
 }

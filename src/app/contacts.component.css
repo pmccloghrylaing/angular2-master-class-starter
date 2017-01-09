@@ -6,6 +6,12 @@
   margin-bottom: 0;
 }
 
+/deep/ .card-title {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.5);
+}
+
 /deep/ .collection .collection-item.avatar .circle {
   top: 1.5em;
 }
@@ -61,4 +67,21 @@
 
 /deep/ .collection .collection-item.avatar .circle {
   background: #ccc;
+}
+
+.loading-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  z-index: 10;
+  transition: opacity .25s ease-in-out, z-index 0s linear;
+}
+.loading-overlay.hidden {
+  opacity: 0;
+  z-index: -1;
+  transition: opacity .25s ease-in-out, z-index 0s .5s linear;
 }
