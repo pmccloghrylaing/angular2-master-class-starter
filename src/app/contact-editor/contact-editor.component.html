@@ -1,0 +1,75 @@
+<div class="row">
+  <form class="col s12 m7">
+    <div class="card">
+      <div class="card-image">
+        <img [src]="contact.image || ''">
+        <span class="card-title">{{contact.name}}</span>
+      </div>
+      <div class="card-content grey-text text-darken-4">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">account_circle</i><input id="name" name="name" type="text" class="validate" [(ngModel)]="contact.name">
+            <label class="active" for="name">Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">email</i><input id="email" name="email" type="text" class="validate" [(ngModel)]="contact.email">
+            <label class="active" for="email">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">phone</i><input id="phone" name="phone" type="text" class="validate" [(ngModel)]="contact.phone">
+            <label class="active" for="phone">Phone</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">cake</i><input id="birthday" name="birthday" type="date" class="validate" [(ngModel)]="contact.birthday">
+            <label class="active" for="birthday">Birthday</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">public</i><input id="website" name="website" type="text" class="validate" [(ngModel)]="contact.website">
+            <label class="active" for="website">Website</label>
+          </div>
+        </div>
+        <fieldset>
+          <legend><i class="material-icons prefix">location_city</i> Address</legend>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="street" name="street" type="text" class="validate" [(ngModel)]="contact.address.street">
+              <label class="active" for="street">Street</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="zip" name="zip" type="text" class="validate" [(ngModel)]="contact.address.zip">
+              <label class="active" for="zip">Zipcode</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="city" name="city" type="text" class="validate" [(ngModel)]="contact.address.city">
+              <label class="active" for="city">City</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="country" name="country" type="text" class="validate" [(ngModel)]="contact.address.country">
+              <label class="active" for="country">Country</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-action">
+        <button type="button" class="btn" (click)="cancel(contact)">Cancel</button>
+        <button type="button" class="btn" (click)="save(contact)">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
