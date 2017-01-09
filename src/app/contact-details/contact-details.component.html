@@ -8,19 +8,19 @@
       <div class="card-content grey-text text-darken-4">
         <div class="row">
           <span class="col s6"><i class="material-icons prefix">email</i> Email:</span>
-          <span class="col s6">{{contact.email}}</span>
+          <a class="col s6" [href]="contact.email ? 'mailto:' + contact.email : ''">{{contact.email}}</a>
         </div>
         <div class="row">
           <span class="col s6"><i class="material-icons prefix">phone</i> Phone:</span>
-          <span class="col s6">{{contact.phone}}</span>
+          <a class="col s6" [href]="contact.phone ? 'tel:' + contact.phone : ''">{{contact.phone}}</a>
         </div>
         <div class="row">
           <span class="col s6"><i class="material-icons prefix">cake</i> Birthday:</span>
-          <span class="col s6">{{contact.birthday}}</span>
+          <span class="col s6">{{contact.birthday | date}}</span>
         </div>
         <div class="row">
           <span class="col s6"><i class="material-icons prefix">public</i> Website:</span>
-          <span class="col s6">{{contact.website}}</span>
+          <a class="col s6" [href]="contact.website ? ('http://' + contact.website).replace('http://http', 'http') : ''" target="_blank">{{contact.website}}</a>
         </div>
         <fieldset *ngIf="contact.address != null">
           <legend><i class="material-icons prefix">location_city</i> Address</legend>
@@ -42,13 +42,9 @@
           </div>
         </fieldset>
       </div>
-      <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red" [routerLink]="['edit']">
-          <i class="material-icons">mode_edit</i>
-        </a>
-      </div>
       <div class="card-action">
-        <a [routerLink]="['/']">Go Back</a>
+        <a class="blue-text" [routerLink]="['/']">Go Back</a>
+        <a class="blue-text" [routerLink]="['edit']">Edit</a>
       </div>
     </div>
   </div>

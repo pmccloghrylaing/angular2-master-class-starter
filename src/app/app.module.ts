@@ -11,8 +11,7 @@ import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsAppRoutes } from './app.routes';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
-import { ContactsService } from './contacts.service';
-import { ContactResolver } from './contact.resolver';
+import { APP_PROVIDERS } from './app.providers';
 
 @NgModule({
   declarations: [
@@ -29,10 +28,7 @@ import { ContactResolver } from './contact.resolver';
     FormsModule
   ],
   bootstrap: [ContactsAppComponent],
-  providers: [
-    ContactsService,
-    ContactResolver
-  ]
+  providers: APP_PROVIDERS
 })
 export class ContactsModule {
 

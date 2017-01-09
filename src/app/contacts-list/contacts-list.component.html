@@ -1,5 +1,5 @@
 <div class="collection">
-  <a class="collection-item avatar" *ngFor="let contact of contacts" [routerLink]="['/contact', contact.id]">
+  <a class="collection-item avatar" *ngFor="let contact of contacts | async" [routerLink]="['/contact', contact.id]">
     <img [src]="contact.image" alt="" class="circle">
     <span class="title">{{contact.name}}</span>
   </a>

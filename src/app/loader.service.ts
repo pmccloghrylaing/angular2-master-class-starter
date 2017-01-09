@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class LoaderService {
-  loading: boolean = true;
+  loading: number = 0;
 
   constructor(private router: Router) { 
     this.router.events.subscribe((event: RouterEvent) => {
@@ -22,26 +22,26 @@ export class LoaderService {
   // Shows and hides the loading spinner during RouterEvent changes
   navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
-      this.loading = true;
+      this.loading += 1;
     }
     if (event instanceof NavigationEnd) {
-      this.loading = false;
+      this.loading -= 1;
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
     if (event instanceof NavigationCancel) {
-      this.loading = false;
+      this.loading -= 1;
     }
     if (event instanceof NavigationError) {
-      this.loading = false;
+      this.loading -= 1;
     }
   }
 
   showLoader<T>(observable: Observable<T>) {
-    this.loading = true;
+    this.loading += 1;
     observable.subscribe(
       null,
-      () => this.loading = false,
-      () => this.loading = false);
+      () => this.loading -= 1,
+      () => this.loading -= 1);
   }
 }
