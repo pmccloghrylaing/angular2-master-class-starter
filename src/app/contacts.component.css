@@ -1,8 +1,8 @@
-/deep/ .collection,
-/deep/ .card {
+/deep/ .collection {
   margin-top: 0;
 }
-/deep/ .collection {
+/deep/ .collection:last-child,
+/deep/ .row:last-child {
   margin-bottom: 0;
 }
 
