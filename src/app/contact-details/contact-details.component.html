@@ -6,45 +6,51 @@
         <span class="card-title">{{contact.name}}</span>
       </div>
       <div class="card-content grey-text text-darken-4">
-        <div class="row">
-          <span class="col s6"><i class="material-icons prefix">email</i> Email:</span>
-          <a class="col s6" [href]="contact.email ? 'mailto:' + contact.email : ''">{{contact.email}}</a>
-        </div>
-        <div class="row">
-          <span class="col s6"><i class="material-icons prefix">phone</i> Phone:</span>
-          <a class="col s6" [href]="contact.phone ? 'tel:' + contact.phone : ''">{{contact.phone}}</a>
-        </div>
-        <div class="row">
-          <span class="col s6"><i class="material-icons prefix">cake</i> Birthday:</span>
-          <span class="col s6">{{contact.birthday | date}}</span>
-        </div>
-        <div class="row">
-          <span class="col s6"><i class="material-icons prefix">public</i> Website:</span>
-          <a class="col s6" [href]="contact.website ? ('http://' + contact.website).replace('http://http', 'http') : ''" target="_blank">{{contact.website}}</a>
-        </div>
-        <fieldset *ngIf="contact.address != null">
-          <legend><i class="material-icons prefix">location_city</i> Address</legend>
-          <div class="row">
-            <span class="col s6">Street:</span>
-            <span class="col s6">{{contact.address.street}}</span>
-          </div>
-          <div class="row">
-            <span class="col s6">Zipcode:</span>
-            <span class="col s6">{{contact.address.zip}}</span>
-          </div>
-          <div class="row">
-            <span class="col s6">City:</span>
-            <span class="col s6">{{contact.address.city}}</span>
-          </div>
-          <div class="row">
-            <span class="col s6">Country:</span>
-            <span class="col s6">{{contact.address.country}}</span>
-          </div>
-        </fieldset>
+        <trm-tabs>
+          <trm-tab [title]="'General'">
+            <div class="row">
+              <span class="col s6"><i class="material-icons prefix">email</i> Email:</span>
+              <a class="col s6" [href]="contact.email ? 'mailto:' + contact.email : ''">{{contact.email}}</a>
+            </div>
+            <div class="row">
+              <span class="col s6"><i class="material-icons prefix">phone</i> Phone:</span>
+              <a class="col s6" [href]="contact.phone ? 'tel:' + contact.phone : ''">{{contact.phone}}</a>
+            </div>
+            <div class="row">
+              <span class="col s6"><i class="material-icons prefix">cake</i> Birthday:</span>
+              <span class="col s6">{{contact.birthday | date}}</span>
+            </div>
+            <div class="row">
+              <span class="col s6"><i class="material-icons prefix">public</i> Website:</span>
+              <a class="col s6" [href]="contact.website ? ('http://' + contact.website).replace('http://http', 'http') : ''" target="_blank">{{contact.website}}</a>
+            </div>
+          </trm-tab>
+          <trm-tab [title]="'Address'">
+            <fieldset>
+              <legend><i class="material-icons prefix">location_city</i> Address</legend>
+              <div class="row">
+                <span class="col s6">Street:</span>
+                <span class="col s6">{{contact.address.street}}</span>
+              </div>
+              <div class="row">
+                <span class="col s6">Zipcode:</span>
+                <span class="col s6">{{contact.address.zip}}</span>
+              </div>
+              <div class="row">
+                <span class="col s6">City:</span>
+                <span class="col s6">{{contact.address.city}}</span>
+              </div>
+              <div class="row">
+                <span class="col s6">Country:</span>
+                <span class="col s6">{{contact.address.country}}</span>
+              </div>
+            </fieldset>
+          </trm-tab>
+        </trm-tabs>
       </div>
       <div class="card-action">
-        <a class="blue-text" [routerLink]="['/']">Go Back</a>
-        <a class="blue-text" [routerLink]="['edit']">Edit</a>
+        <a class="blue-text" (click)="back.emit()">Go Back</a>
+        <a class="blue-text" (click)="edit.emit(contact)">Edit</a>
       </div>
     </div>
   </div>

@@ -15,7 +15,7 @@ export class ContactsService {
     return this.http.get(`${this.apiEndpoint}/api/contacts`)
       .map(r => r.json())
       .map(d => <Contact[]>d.items)
-      .delay(5000);
+      .delay(1000);
   }
 
   getContact(id: string): Observable<Contact> {
@@ -45,22 +45,25 @@ export class ContactsService {
       .map(t => (t || '').trim())
       .distinctUntilChanged()
       .do(x => onRequest && onRequest())
-      .switchMap(term => Observable.of(
-        this.getCurrentMatches(lastResults, term),
-        term ?
+      .switchMap(term => {
+        var currentMatches = this.getCurrentMatches(lastResults, term);
+        var search = (term ?
           this.rawSearch(term) :
-          this.getContacts()))
-      .flatMap(x => x)
-      .do(x => {
-        lastResults = x;
-        onResponse && onResponse();
-      });
+          this.getContacts())
+          .do(x => {
+            lastResults = x;
+            onResponse && onResponse();
+          });
+        return currentMatches.length > 0 ?
+          Observable.of(Observable.of(currentMatches), search) :
+          Observable.of(search);
+      })
+      .flatMap(x => x);
   }
 
-  private getCurrentMatches(current: Contact[], term): Observable<Contact[]> {
-    return Observable.of(
-      current.filter(c =>
-        c.name.toLowerCase()
-          .indexOf(term.toLowerCase()) !== -1));
+  private getCurrentMatches(current: Contact[], term): Contact[] {
+    return current.filter(c =>
+      c.name.toLowerCase()
+        .indexOf(term.toLowerCase()) !== -1);
   }
 }

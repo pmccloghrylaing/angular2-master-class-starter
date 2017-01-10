@@ -86,3 +86,7 @@
   z-index: -1;
   transition: opacity .25s ease-in-out, z-index 0s .5s linear;
 }
+
+/deep/ .tabs {
+  margin: 0 0 1em;
+}
