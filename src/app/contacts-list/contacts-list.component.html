@@ -1,6 +1,24 @@
 <div class="collection">
-  <a class="collection-item avatar" *ngFor="let contact of contacts | async" [routerLink]="['/contact', contact.id]">
+  <div class="collection-item">
+    <input id="search" name="search" type="search" autocomplete="off" placeholder="Search" [(ngModel)]="term" (input)="terms$.next($event.target.value)">
+  </div>
+  <a class="collection-item avatar" [class.hide]="searching" *ngFor="let contact of contacts$ | async" [routerLink]="['/contact', contact.id]">
     <img [src]="contact.image" alt="" class="circle">
     <span class="title">{{contact.name}}</span>
   </a>
+</div>
+<div class="center" [class.hide]="!searching">
+  <div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -80,7 +80,8 @@
   z-index: 10;
   transition: opacity .25s ease-in-out, z-index 0s linear;
 }
-.loading-overlay.hidden {
+.loading-overlay.hide {
+  display: block !important;
   opacity: 0;
   z-index: -1;
   transition: opacity .25s ease-in-out, z-index 0s .5s linear;

@@ -39,9 +39,12 @@ export class LoaderService {
 
   showLoader<T>(observable: Observable<T>) {
     this.loading += 1;
-    observable.subscribe(
+    var result = observable.share()
+    result.subscribe(
       null,
       () => this.loading -= 1,
       () => this.loading -= 1);
+    
+    return result;
   }
 }
