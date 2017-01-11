@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/share';
@@ -27,6 +27,12 @@ import { ContactDetailsViewComponent } from './contact-details-view/contact-deta
 import { ContactsListViewComponent } from './contacts-list-view/contacts-list-view.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tabs/tab.component';
+import { ContactCreatorComponent } from './contact-creator/contact-creator.component';
+import { ContactCreatorViewComponent } from './contact-creator-view/contact-creator-view.component';
+import { ErrorsPipe } from './errors.pipe';
+import { EmailValidatorDirective } from './email-validator.directive';
+import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
+import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -38,13 +44,20 @@ import { TabComponent } from './tabs/tab.component';
     ContactDetailsViewComponent,
     ContactsListViewComponent,
     TabsComponent,
-    TabComponent
+    TabComponent,
+    ContactCreatorComponent,
+    ContactCreatorViewComponent,
+    ErrorsPipe,
+    EmailValidatorDirective,
+    EmailAvailabilityValidatorDirective,
+    ContactsDashboardComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(ContactsAppRoutes),
     HttpModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   bootstrap: [ContactsAppComponent],
   providers: APP_PROVIDERS

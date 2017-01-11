@@ -6,7 +6,7 @@ import { ContactsService } from './contacts.service';
 @Injectable()
 export class ContactResolver implements Resolve<Contact> {
 
-  constructor(@Inject(forwardRef(() => ContactsService)) private contactsService: ContactsService) { }
+  constructor(private contactsService: ContactsService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
     return this.contactsService.getContact(route.params['id']);

@@ -3,13 +3,13 @@ import { CONTACT_DATA } from './data/contact-data';
 import { Contact } from './models/contact';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { API_ENDPOINT_TOKEN } from './app.tokens';
+import { API_ENDPOINT } from './app.tokens';
 
 @Injectable()
 export class ContactsService {
 
   constructor(private http: Http,
-    @Inject(API_ENDPOINT_TOKEN) private apiEndpoint: string) { }
+    @Inject(API_ENDPOINT) private apiEndpoint: string) { }
 
   getContacts(): Observable<Contact[]> {
     return this.http.get(`${this.apiEndpoint}/api/contacts`)
@@ -27,6 +27,13 @@ export class ContactsService {
 
   updateContact(contact: Contact): Observable<any> {
     return this.http.put(`${this.apiEndpoint}/api/contacts/${contact.id}`, contact)
+      .delay(1000);
+  }
+
+  addContact(contact: Contact): Observable<Contact> {
+    return this.http.post(`${this.apiEndpoint}/api/contacts`, contact)
+      .map(r => r.json())
+      .map(d => d.item)
       .delay(1000);
   }
 
@@ -65,5 +72,12 @@ export class ContactsService {
     return current.filter(c =>
       c.name.toLowerCase()
         .indexOf(term.toLowerCase()) !== -1);
+  }
+
+  isEmailAvailable(email: string): Observable<{ error?: string; status?: string; }> {
+    return this.http
+      .get(`${this.apiEndpoint}/api/check-email?email=${email}`)
+      .map(r => r.json())
+      .delay(1000);
   }
 }

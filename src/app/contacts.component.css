@@ -33,10 +33,6 @@
   justify-content: center;
 }
 
-.preloader-wrapper {
-  margin-top: 20em;
-}
-
 /deep/ .col.s6 .material-icons {
   vertical-align: -25%;
 }
@@ -71,15 +67,20 @@
 
 .loading-overlay {
   position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  left: 50%;
+  top: 50%;
+  width: 128px;
+  height: 128px;
+  padding: 31px;
+  margin: -64px;
+  border-radius: 64px;
+  border: 1px solid #fff;
   background: rgba(255, 255, 255, 0.8);
   text-align: center;
   z-index: 10;
   transition: opacity .25s ease-in-out, z-index 0s linear;
 }
+
 .loading-overlay.hide {
   display: block !important;
   opacity: 0;
@@ -89,4 +90,12 @@
 
 /deep/ .tabs {
   margin: 0 0 1em;
+}
+
+@media only screen and (min-width: 601px) {
+  /deep/ trm\-contacts\-list\-view {
+    float: left;
+    width: 30%;
+    min-width: 250px;
+  }
 }

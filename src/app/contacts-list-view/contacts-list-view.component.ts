@@ -15,7 +15,8 @@ import { EventBusService, APP_TITLE_CHANGE } from '../event-bus.service';
   [contacts]="contacts$"
   [searching]="searching"
   (searchContacts)="terms$.next($event)"
-  (selectContact)="selectContact($event)">
+  (selectContact)="selectContact($event)"
+  (addContact)="addContact()">
 </trm-contacts-list>`
 })
 export class ContactsListViewComponent implements OnInit, OnDestroy {
@@ -44,5 +45,9 @@ export class ContactsListViewComponent implements OnInit, OnDestroy {
 
   selectContact(contact: Contact) {
     this.router.navigate(['/contact', contact.id]);
+  }
+
+  addContact() {
+    this.router.navigate(['/contact', 'new']);
   }
 }

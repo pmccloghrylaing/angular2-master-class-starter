@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row" [class.hide-for-small-only]="!id">
   <div class="col s12 m7">
-    <div class="card">
+    <div class="card" *ngIf="contact">
       <div class="card-image">
         <img [src]="contact.image || ''">
         <span class="card-title">{{contact.name}}</span>
@@ -18,7 +18,7 @@
             </div>
             <div class="row">
               <span class="col s6"><i class="material-icons prefix">cake</i> Birthday:</span>
-              <span class="col s6">{{contact.birthday | date}}</span>
+              <span class="col s6">{{(contact.birthday || null) | date}}</span>
             </div>
             <div class="row">
               <span class="col s6"><i class="material-icons prefix">public</i> Website:</span>

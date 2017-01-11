@@ -11,6 +11,7 @@ export class ContactsListComponent {
   @Input() searching = false;
   @Output() searchContacts = new EventEmitter<string>();
   @Output() selectContact = new EventEmitter<Contact>();
+  @Output() addContact = new EventEmitter<void>();
 
   constructor() { }
 }

@@ -1,16 +1,22 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 import { ContactsService } from '../contacts.service'
 import { LoaderService } from '../loader.service';
 import { EventBusService } from '../event-bus.service';
-import { Contact } from '../models/contact'
+import { Contact } from '../models/contact';
+import { SaveComponent } from '../navigateSave.guard';
 
 @Component({
   selector: 'trm-contact-editor',
   templateUrl: './contact-editor.component.html'
 })
-export class ContactEditorComponent implements OnInit {
-  contact: Contact;
+export class ContactEditorComponent implements OnInit, AfterViewInit, SaveComponent {
+  saved = true;
+  private contact: Contact;
+  private dirtySubscription: Subscription;
+  @ViewChild(NgForm) form: NgForm;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +28,12 @@ export class ContactEditorComponent implements OnInit {
   ngOnInit() {
     this.contact = this.route.snapshot.data['contact'];
 
-    this.eventBus.emit('appTitleChange', `Edit: ${this.contact.name}`)
+    this.eventBus.emit('appTitleChange', `Edit: ${this.contact.name}`);
+  }
+
+  ngAfterViewInit() {
+    this.form.statusChanges
+        .subscribe(() => this.saved = !this.form.dirty);
   }
 
   cancel(contact: Contact) {

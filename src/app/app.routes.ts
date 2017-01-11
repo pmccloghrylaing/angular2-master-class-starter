@@ -1,19 +1,39 @@
 import { Routes } from '@angular/router';
-import { ContactsListViewComponent } from './contacts-list-view/contacts-list-view.component';
+import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
 import { ContactDetailsViewComponent } from './contact-details-view/contact-details-view.component';
+import { ContactCreatorViewComponent } from './contact-creator-view/contact-creator-view.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
 import { ContactResolver } from './contact.resolver';
+import { NavigateSaveGuard } from './navigateSave.guard';
 
-export const ContactsAppRoutes: Routes = [
-  { path: '', component: ContactsListViewComponent },
+export const ContactsAppRoutes = <Routes>[
   {
-    path: 'contact/:id',
-    component: ContactDetailsViewComponent,
-    resolve: { contact: ContactResolver }
+    path: '',
+    component: ContactsDashboardComponent,
+    children: [
+      {
+        path: '',
+        component: ContactDetailsViewComponent
+      },
+      {
+        path: 'contact/new',
+        component: ContactCreatorViewComponent,
+        canDeactivate: [NavigateSaveGuard]
+      },
+      {
+        path: 'contact/:id',
+        component: ContactDetailsViewComponent
+      },
+      {
+        path: 'contact/:id/edit',
+        component: ContactEditorComponent,
+        resolve: { contact: ContactResolver },
+        canDeactivate: [NavigateSaveGuard]
+      }
+    ]
   },
   {
-    path: 'contact/:id/edit',
-    component: ContactEditorComponent,
-    resolve: { contact: ContactResolver }
+    path: 'about',
+    component: 'app/about#AboutComponent'
   }
 ];

@@ -1,0 +1,89 @@
+<div class="row">
+  <form class="col s12 m7" [formGroup]="form" (ngSubmit)="save.emit(form.value)" novalidate>
+    <div class="card">
+      <div class="card-content grey-text text-darken-4">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">account_circle</i><input id="name" formControlName="name" class="validate"
+              [class.invalid]="showErrors('name')">
+            <label class="active" for="name">Name</label>
+            <div *ngIf="showErrors('name')">
+              <p class="error-msg" *ngFor="let msg of getErrors('name') | errors:'Name'">{{ msg }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">email</i><input id="email" type="email" formControlName="email" class="validate"
+              [class.invalid]="showErrors('email')">
+            <label class="active" for="email">Email</label>
+            <div *ngIf="showErrors('email')">
+              <p class="error-msg" *ngFor="let msg of getErrors('email') | errors:'Email'">{{ msg }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">phone</i><input id="phone" formControlName="phone" class="validate"
+              [class.invalid]="showErrors('phone')">
+            <label class="active" for="phone">Phone</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">cake</i><input id="birthday" type="date" formControlName="birthday" class="validate"
+              [class.invalid]="showErrors('birthday')">
+            <label class="active" for="birthday">Birthday</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">public</i><input id="website" formControlName="website" class="validate"
+              [class.invalid]="showErrors('website')">
+            <label class="active" for="website">Website</label>
+          </div>
+        </div>
+        <fieldset formGroupName="address">
+          <legend><i class="material-icons prefix">location_city</i> Address</legend>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="street" type="text" formControlName="street" class="validate"
+                [class.invalid]="showErrors('address.street')">
+              <label class="active" for="street">Street</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="zip" type="text" formControlName="zip" class="validate" pattern="[A-Z\d]{4,}"
+                [class.invalid]="showErrors('address.zip')">
+              <label class="active" for="zip">Zipcode</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="city" formControlName="city" type="text" class="validate"
+                [class.invalid]="showErrors('address.city')">
+              <label class="active" for="city">City</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <label class="input-select-label">Country</label>
+              <select formControlName="country" class="validate"
+                [class.invalid]="showErrors('address.country')">
+                <option></option>
+                <option *ngFor="let country of countries">{{ country.name }}</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-action">
+        <a class="btn" (click)="cancel.emit()">Cancel</a>
+        <button type="submit" class="btn" [disabled]="!form.valid">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
