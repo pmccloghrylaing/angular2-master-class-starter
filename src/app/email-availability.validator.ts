@@ -12,7 +12,8 @@ import { EmailValidator } from './email.validator';
   ]
 })
 export class EmailAvailabilityValidator implements Validator {
-  private controlMap = new Map<AbstractControl, Observable<{}>>();
+  private validationResult$: Observable<{}>;
+  private currentControl: AbstractControl;
 
   validate: AsyncValidatorFn;
 
@@ -24,24 +25,24 @@ export class EmailAvailabilityValidator implements Validator {
         return Observable.of(null);
       }
 
-      if (!this.controlMap.has(control)) {
-        this.controlMap.set(control,
-          control.valueChanges
-            .debounceTime(400)
-            .distinctUntilChanged()
-            .switchMap(() => {
-              if (!emailValidator.isValidEmail(control.value)) {
-                return Observable.of(null);
-              }
-              return contactsService.isEmailAvailable(control.value)
-                .map(x => x.error ? {
-                  checkEmailAsync: true
-                } : null);
-            })
-            .share());
+      if (this.currentControl != control || this.validationResult$ == null) {
+        this.currentControl = control;
+        this.validationResult$ = control.valueChanges
+          .debounceTime(400)
+          .distinctUntilChanged()
+          .switchMap(() => {
+            if (!emailValidator.isValidEmail(control.value)) {
+              return Observable.of(null);
+            }
+            return contactsService.isEmailAvailable(control.value)
+              .map(available => available ? null : {
+                checkEmailAsync: true
+              });
+          })
+          .share();
       }
 
-      return this.controlMap.get(control).first();
+      return this.validationResult$;
     }
   }
 }

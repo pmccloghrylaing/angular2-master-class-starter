@@ -74,10 +74,11 @@ export class ContactsService {
         .indexOf(term.toLowerCase()) !== -1);
   }
 
-  isEmailAvailable(email: string): Observable<{ error?: string; status?: string; }> {
+  isEmailAvailable(email: string): Observable<boolean> {
     return this.http
       .get(`${this.apiEndpoint}/api/check-email?email=${email}`)
       .map(r => r.json())
+      .map(d => !d.error)
       .delay(1000);
   }
 }
