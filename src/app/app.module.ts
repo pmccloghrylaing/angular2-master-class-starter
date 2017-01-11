@@ -33,6 +33,7 @@ import { ErrorsPipe } from './errors.pipe';
 import { EmailValidatorDirective } from './email-validator.directive';
 import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
 import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashbo
     ErrorsPipe,
     EmailValidatorDirective,
     EmailAvailabilityValidatorDirective,
-    ContactsDashboardComponent
+    ContactsDashboardComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

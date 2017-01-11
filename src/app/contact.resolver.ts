@@ -9,6 +9,6 @@ export class ContactResolver implements Resolve<Contact> {
   constructor(private contactsService: ContactsService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this.contactsService.getContact(route.params['id']);
+    return this.contactsService.getContact(route.params['id'] || '0');
   }
 }

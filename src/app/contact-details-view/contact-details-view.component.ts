@@ -4,7 +4,6 @@ import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
 import { EventBusService, APP_TITLE_CHANGE } from '../event-bus.service';
 import { Subscription } from 'rxjs/Subscription';
-import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'trm-contact-details-view',
@@ -17,32 +16,30 @@ import { LoaderService } from '../loader.service';
 })
 export class ContactDetailsViewComponent implements OnInit, OnDestroy {
   private contact: Contact;
-  private contactSubscription: Subscription
+  private subscriptions: Subscription[]
   private id: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService,
     private contactsService: ContactsService,
     private eventBus: EventBusService) { }
 
   ngOnInit() {
-    this.contactSubscription = this.route.params
-      .switchMap(p => {
-        this.id = p['id'];
-        return this.id ?
-          this.loader.showLoader(this.contactsService.getContact(this.id)) :
-          this.contactsService.getContact('0');
-      })
-      .subscribe(contact => {
-        this.contact = contact;
-        this.eventBus.emit(APP_TITLE_CHANGE, contact.name);
-      });
+    this.subscriptions = [
+      this.route.params
+        .subscribe(p => this.id = p['id']),
+      this.route.data
+        .map(data => data['contact'])
+        .subscribe(contact => {
+          this.contact = contact;
+          this.eventBus.emit(APP_TITLE_CHANGE, contact.name);
+        })
+    ];
   }
 
   ngOnDestroy() {
-    this.contactSubscription.unsubscribe();
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   edit(contact: Contact) {
