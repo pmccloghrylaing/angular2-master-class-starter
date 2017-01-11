@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs/Subscription';
   `<trm-contact-details
   [contact]="contact"
   (edit)="edit($event)"
-  (back)="back()">
+  (back)="back()"
+  [class.hide-on-small-only]="id == null">
 </trm-contact-details>`
 })
 export class ContactDetailsViewComponent implements OnInit, OnDestroy {
@@ -33,7 +34,9 @@ export class ContactDetailsViewComponent implements OnInit, OnDestroy {
         .map(data => data['contact'])
         .subscribe(contact => {
           this.contact = contact;
-          this.eventBus.emit(APP_TITLE_CHANGE, contact.name);
+          if (this.id) {
+            this.eventBus.emit(APP_TITLE_CHANGE, contact.name);
+          }
         })
     ];
   }

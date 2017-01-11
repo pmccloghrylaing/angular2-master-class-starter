@@ -3,8 +3,8 @@ import { FormControl, FormGroup, FormBuilder, Validators, AsyncValidatorFn } fro
 import { Subscription } from 'rxjs/Subscription';
 import { Contact } from '../models/contact';
 import { COUNTRIES_DATA } from '../data/countries-data';
-import { validateEmail } from '../email-validator.directive';
-import { checkEmailAvailability } from '../email-availability-validator.directive';
+import { EmailValidator } from '../email.validator';
+import { EmailAvailabilityValidator } from '../email-availability.validator';
 import { ContactsService } from '../contacts.service';
 
 @Component({
@@ -22,19 +22,23 @@ export class ContactCreatorComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
     private contactsService: ContactsService,
-    @Inject(checkEmailAvailability) private checkEmailAsync: AsyncValidatorFn) { }
+    private emailValidator: EmailValidator,
+    private emailAvailabilityValidator: EmailAvailabilityValidator) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: this.fb.control('', [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      email: this.fb.control('', [
-        Validators.required,
-        validateEmail
-      ], [
-          this.checkEmailAsync
+      name: this.fb.control('',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]),
+      email: this.fb.control('',
+        [
+          Validators.required,
+          this.emailValidator.validate
+        ],
+        [
+          this.emailAvailabilityValidator.validate
         ]),
       phone: this.fb.control(''),
       birthday: this.fb.control(null),

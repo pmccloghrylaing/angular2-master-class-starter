@@ -4,7 +4,6 @@ import { ContactDetailsViewComponent } from './contact-details-view/contact-deta
 import { ContactCreatorViewComponent } from './contact-creator-view/contact-creator-view.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
 import { ContactResolver } from './contact.resolver';
-import { AboutComponent } from './about/about.component';
 import { NavigateSaveGuard } from './navigateSave.guard';
 
 export const ContactsAppRoutes: Routes = [
@@ -37,6 +36,6 @@ export const ContactsAppRoutes: Routes = [
   },
   {
     path: 'about',
-    component: AboutComponent
+    loadChildren: './about/about.module#AboutModule'
   }
 ];

@@ -6,8 +6,8 @@ import { ContactsService } from './contacts.service';
 import { ContactResolver } from './contact.resolver';
 import { LoaderService } from './loader.service';
 import { EventBusService } from './event-bus.service';
-import { validateEmail } from './email-validator.directive';
-import { checkEmailAvailability } from './email-availability-validator.directive';
+import { EmailValidator } from './email.validator';
+import { EmailAvailabilityValidator } from './email-availability.validator';
 import { NavigateSaveGuard } from './navigateSave.guard';
 
 export const APP_PROVIDERS: Provider[] = [
@@ -16,6 +16,7 @@ export const APP_PROVIDERS: Provider[] = [
   ContactResolver,
   LoaderService,
   EventBusService,
-  { provide: checkEmailAvailability, useFactory: checkEmailAvailability, deps: [ContactsService] },
+  EmailValidator,
+  EmailAvailabilityValidator,
   NavigateSaveGuard
 ];

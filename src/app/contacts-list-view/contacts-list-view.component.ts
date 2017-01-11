@@ -6,7 +6,6 @@ import { LoaderService } from '../loader.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { EventBusService, APP_TITLE_CHANGE } from '../event-bus.service';
 
 @Component({
   selector: 'trm-contacts-list-view',
@@ -26,12 +25,9 @@ export class ContactsListViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private contactsService: ContactsService,
-    private router: Router,
-    private eventBus: EventBusService) { }
+    private router: Router) { }
 
   ngOnInit() {
-    this.eventBus.emit(APP_TITLE_CHANGE, 'Contacts');
-
     this.contacts$ = this.contactsService.search(
         this.terms$.startWith(''),
         500,

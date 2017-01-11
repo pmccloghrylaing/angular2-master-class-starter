@@ -1,2 +1,2 @@
-<trm-contacts-list-view></trm-contacts-list-view>
-<router-outlet></router-outlet>
+<trm-contacts-list-view [class.hide-on-small-only]="mainPanelInUse"></trm-contacts-list-view>
+<router-outlet [class.hide-on-small-only]="!mainPanelInUse"></router-outlet>
