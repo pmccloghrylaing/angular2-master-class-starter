@@ -41,8 +41,12 @@ export class ContactEditorComponent implements OnInit, AfterViewInit, SaveCompon
   }
 
   save(contact: Contact) {
-    var saveObs = this.contactsService.updateContact(contact);
-    this.loader.showLoader(saveObs);
-    saveObs.subscribe(x => this.router.navigateByUrl(`/contact/${contact.id}`));
+    this.loader.showLoader(this.contactsService.updateContact(contact))
+      .subscribe(contact => {
+        debugger;
+        this.form.reset(contact);
+        //this.contact = contact;
+        //this.router.navigateByUrl(`/contact/${contact.id}`);
+      });
   }
 }

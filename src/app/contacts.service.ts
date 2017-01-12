@@ -25,8 +25,10 @@ export class ContactsService {
       .delay(1000);
   }
 
-  updateContact(contact: Contact): Observable<any> {
+  updateContact(contact: Contact): Observable<Contact> {
     return this.http.put(`${this.apiEndpoint}/api/contacts/${contact.id}`, contact)
+      .map(r => r.json())
+      .map(d => d.item)
       .delay(1000);
   }
 
